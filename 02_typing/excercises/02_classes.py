@@ -23,7 +23,7 @@ class Shape:
     def circumference(self):
         ...
 
-    def circumscribed_square(self):
+    def circumscribed_square(self) -> "Square":
         ...
 
 
