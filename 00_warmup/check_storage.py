@@ -16,8 +16,8 @@ assert c.list_buckets() == ["my-first-bucket"]
 c.put_object("my-first-bucket", "file0.txt", "FIRST")
 c.put_object("my-first-bucket", "file1.txt", "SECOND")
 
-assert "file0" in c.list_objects("my-first-bucket")
-assert "file1" in c.list_objects("my-first-bucket")
+assert "file0.txt" in c.list_objects("my-first-bucket")
+assert "file1.txt" in c.list_objects("my-first-bucket")
 
 c.create_bucket("my-second-bucket")
 
