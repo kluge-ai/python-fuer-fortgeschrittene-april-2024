@@ -24,8 +24,17 @@ class Permission:
     resource_kind: RESOURCES
     actions: list[ACTIONS]
 
+    def is_valid(self) -> bool:
+        return True
 
-def can(user: User, permission: Permission, resource_name: str, resource_kind: RESOURCES, action: ACTIONS) -> bool:
+
+def can(
+    user: User,
+    permission: Permission,
+    resource_name: str,
+    resource_kind: RESOURCES,
+    action: ACTIONS,
+) -> bool:
     if user.name != permission.user_name:
         return False
     if resource_kind != permission.resource_kind:
@@ -35,4 +44,3 @@ def can(user: User, permission: Permission, resource_name: str, resource_kind: R
     if action not in permission.actions:
         return False
     return True
-

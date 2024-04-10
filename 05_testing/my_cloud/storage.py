@@ -38,9 +38,7 @@ class StorageClient:
 
         all_files = []
         for path, folders, files in bucket_path.walk():
-            all_files += [
-                str(path.relative_to(bucket_path) / file) for file in files
-            ]
+            all_files += [str(path.relative_to(bucket_path) / file) for file in files]
         return all_files
 
     def get_object(self, bucket: str, key: str) -> str:
@@ -51,7 +49,9 @@ class StorageClient:
             with open(bucket_path / pathlib.Path(key), "rt") as f:
                 return f.read()
         except FileNotFoundError:
-            raise ResourceNotFoundException(f"Object {key} in bucket {bucket} does not exist.")
+            raise ResourceNotFoundException(
+                f"Object {key} in bucket {bucket} does not exist."
+            )
 
     def delete_object(self, bucket: str, key: str) -> None:
         """Lösche die Datei unter dem Schlüssel/Pfad `key` im Bucket `bucket`."""
@@ -60,7 +60,9 @@ class StorageClient:
         try:
             (bucket_path / pathlib.Path(key)).unlink()
         except FileNotFoundError:
-            raise ResourceNotFoundException(f"Object {key} in bucket {bucket} does not exist.")
+            raise ResourceNotFoundException(
+                f"Object {key} in bucket {bucket} does not exist."
+            )
 
     def _validate_bucket(self, bucket: str) -> pathlib.Path:
         bucket_path = self.root / bucket

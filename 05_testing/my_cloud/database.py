@@ -31,22 +31,34 @@ class DatabaseClient:
         )
 
     def _get_key_schema(self, table_name: str) -> tuple[str, ...]:
-        return tuple(json.loads(self.storage_client.get_object(self._meta_bucket_name, table_name)))
+        return tuple(
+            json.loads(
+                self.storage_client.get_object(self._meta_bucket_name, table_name)
+            )
+        )
 
     def describe_table(self, table_name: str) -> dict[str, Any]:
         """Gebe den Key und weitere Informationen zu der Tabelle `table_name` zurück."""
         return {
             "key_schema": self._get_key_schema(table_name),
-            "items": len(self.storage_client.list_objects(table_name))
+            "items": len(self.storage_client.list_objects(table_name)),
         }
 
     def list_tables(self) -> list[str]:
         """Gebe eine Liste aller vorhandenen Tabellen zurück."""
-        return [bucket_name for bucket_name in self.storage_client.list_buckets()
-                if bucket_name != self._meta_bucket_name]
+        return [
+            bucket_name
+            for bucket_name in self.storage_client.list_buckets()
+            if bucket_name != self._meta_bucket_name
+        ]
 
     def _get_key(self, item: dict[str, Any], key_schema: tuple[str, ...]) -> str:
-        return "/".join([self._hash_algorithm(str(item[key]).encode()).hexdigest() for key in key_schema])
+        return "/".join(
+            [
+                self._hash_algorithm(str(item[key]).encode()).hexdigest()
+                for key in key_schema
+            ]
+        )
 
     def put_item(self, table_name: str, item: dict[str, Any]):
         """Speichere das Item `item` in der Tabelle `table_name`."""
@@ -66,9 +78,13 @@ class DatabaseClient:
         try:
             return json.loads(self.storage_client.get_object(table_name, hashed_key))
         except ResourceNotFoundException:
-            raise ResourceNotFoundException(f"Item with key {key} does not exist in table {table_name}.")
+            raise ResourceNotFoundException(
+                f"Item with key {key} does not exist in table {table_name}."
+            )
 
-    def batch_get_items(self, table_name: str, keys: Iterable[tuple[Any, ...]]) -> Iterable[dict[str, Any]]:
+    def batch_get_items(
+        self, table_name: str, keys: Iterable[tuple[Any, ...]]
+    ) -> Iterable[dict[str, Any]]:
         """Hole die Items mit Schlüsseln `keys` aus der Tabelle `table_name`."""
         return (self.get_item(table_name, key) for key in keys)
 
@@ -79,4 +95,6 @@ class DatabaseClient:
         try:
             self.storage_client.delete_object(table_name, hashed_key)
         except ResourceNotFoundException:
-            raise ResourceNotFoundException(f"Item with key {key} does not exist in table {table_name}.")
+            raise ResourceNotFoundException(
+                f"Item with key {key} does not exist in table {table_name}."
+            )
