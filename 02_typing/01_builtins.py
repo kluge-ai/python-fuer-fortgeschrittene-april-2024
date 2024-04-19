@@ -1,7 +1,6 @@
-
-
 def square(a: int) -> float:
     return a**2
+
 
 # print(square("abc"))
 print(square(12))
@@ -13,6 +12,7 @@ square(squared_2)
 
 def example(name: str, **kwargs):
     print("kwargs", kwargs)
-    a = kwargs["language"]**2
+    a = kwargs["language"] ** 2
+
 
 example(name="kilian", language=2, role="speaker")

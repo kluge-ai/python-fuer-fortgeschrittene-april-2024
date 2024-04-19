@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "my-cloud"
+version = "1.0.0"
+description = ""
+authors = ["Kilian Kluge <dev@kluge.ai>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+typer = "^0.12.3"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.1.1"
+pre-commit = "^3.7.0"
+pytest-cov = "^5.0.0"
+pytest-mock = "^3.14.0"
+
+[tool.pytest.ini_options]
+addopts = "-m 'not integration'"
+markers = [
+    "unit: local tests without dependencies",
+    "integration: local tests with disk access"
+]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

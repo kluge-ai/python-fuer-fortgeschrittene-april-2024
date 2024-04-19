@@ -1,0 +1,28 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: check-yaml
+        args: ['--unsafe']
+      - id: check-json
+      - id: check-toml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: mixed-line-ending
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    # Ruff version.
+    rev: v0.1.4
+    hooks:
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
+
+  - repo: local
+    hooks:
+      - id: jupyter-nb-clear-empty-cells
+        name: jupyter-nb-clear-empty-cells
+        files: \.ipynb$
+        stages: [ commit ]
+        language: python
+        entry: jupyter nbconvert ----ClearOutputPreprocessor.enabled=False --RegexRemoveProcessor.enabled=True --RegexRemovePreprocessor.patterns="['\s*\Z']" --inplace
+        additional_dependencies: [ 'nbconvert' ]

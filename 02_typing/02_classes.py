@@ -2,7 +2,6 @@ import typing
 
 
 class MyContainer:
-
     def __init__(self, content: str) -> None:
         self.content = content
 
@@ -21,13 +20,11 @@ class MyContainer:
 
 
 class LimitedContainer(MyContainer):
-
     def __init__(self, content: str) -> None:
         super().__init__(content[:6])
 
 
 class NumberStore:
-
     def __init__(self, top: int, bottom: int) -> None:
         self.number = top + bottom
 
@@ -39,12 +36,9 @@ class NumberStore:
 
 
 class CanBeEmptied(typing.Protocol):
+    def is_empty(self) -> bool: ...
 
-    def is_empty(self) -> bool:
-        ...
-
-    def empty(self) -> None:
-        ...
+    def empty(self) -> None: ...
 
 
 def empty_container(container: CanBeEmptied):

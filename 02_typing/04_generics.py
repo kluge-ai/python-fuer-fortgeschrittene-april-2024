@@ -11,9 +11,11 @@ dictionary_with_string_keys: dict[str, typing.Any] = {"a": 1, "b": typing}
 
 
 class MyContainer[T]:
-
     def __init__(self, content: T):
         self.content = content
+
+    def get_value(self) -> T:
+        return self.content
 
 
 string_container = MyContainer(content="7")
@@ -23,7 +25,6 @@ V = typing.TypeVar("V")
 
 
 class MyOldContainer(typing.Generic[V]):
-
     def __init__(self, content: V):
         self.content = content
 
@@ -31,5 +32,5 @@ class MyOldContainer(typing.Generic[V]):
 old_string_container: MyOldContainer[str] = MyOldContainer(content="7")
 
 
-def double[U](number: U) -> U:
-    return 2 * number
+def double[U: float](number: U) -> U | float:
+    return number * 2

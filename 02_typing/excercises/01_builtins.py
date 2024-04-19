@@ -9,7 +9,7 @@ Aufgabe 3: Jeweils mindestens einen Funktionsaufruf hinzufügen, die die Typen d
 
 
 def first_binomial(a, b):
-    return a**2 + 2*a*b + b**2
+    return a**2 + 2 * a * b + b**2
 
 
 def faculty(n):
@@ -28,4 +28,3 @@ def lowercase(text):
 
 def concatenate(*words):
     return " ".join(words)
-

@@ -1,7 +1,4 @@
-import pathlib
-
 class StorageClient:
-
     def __init__(self, root):
         """Initialisiere einen neuen Speicher im Verzeichnis `root`."""
         ...
